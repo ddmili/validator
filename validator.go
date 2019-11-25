@@ -1,13 +1,13 @@
 package validator
 
 import (
-	"fmt"
 	"reflect"
 	"strings"
 )
 
 // 标签字段
 const tagName = "validate"
+
 
 // Validator 验证接口
 type Validator interface {
@@ -18,24 +18,24 @@ type Validator interface {
 // eg：validate:"string,min=1,max=10|require"
 func getValidatorFromTag(tag string) Validator {
 	args := strings.Split(tag, ",")
+	// args[0] 为校验类型
+	//判断自定义校验函数里面有没有
+	fun,ok := validateFun[args[0]]
+	if ok{
+		return NewCustomValidator(fun)
+	}
+
 
 	switch args[0] {
 	case "number": //数字
-		validator := NumberValidator{}
-		//将structTag中的min和max解析到结构体中
-		fmt.Sscanf(strings.Join(args[1:], ","), "min=%d,max=%d", &validator.Min, &validator.Max)
-		return validator
+		return NewNumberValidator(strings.Join(args[1:], ","))
 	case "string": //字符串
-		validator := StringValidator{}
-		//将structTag中的min和max解析到结构体中
-		fmt.Sscanf(strings.Join(args[1:], ","), "min=%d,max=%d", &validator.Min, &validator.Max)
-		return validator
+		return NewStringValidator(strings.Join(args[1:], ","))
 	case "require":
 		return RequireValidator{}
 	default:
 		return NewRuleValidator(args[0])
 	}
-	//return DefaultValidator{}
 }
 
 // Verification 验证
@@ -58,7 +58,6 @@ func Verification(s interface{}) []error {
 		} else {
 			errs = append(errs, checking(v.Field(i).Interface(), tag)...)
 		}
-
 	}
 	return errs
 }

@@ -21,7 +21,11 @@ func NewStringValidator(tag string) Validator {
 
 // Validate 校验函数
 func (v StringValidator) Validate(val interface{}) (bool, error) {
-	l := len(val.(string))
+	a,ok := val.(string)
+	if !ok{
+		return false, fmt.Errorf("不")
+	}
+	l := len(a)
 
 	if l == 0 {
 		return false, fmt.Errorf("不能为空")

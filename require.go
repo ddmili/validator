@@ -13,7 +13,7 @@ func NewRequireValidator() Validator {
 
 func (v RequireValidator) Validate(val interface{}) (bool, error) {
 	if val == nil || val == "" {
-		return false, fmt.Errorf("数据校验错误")
+		return false, fmt.Errorf("数据不能为空")
 	}
 	return true, nil
 }

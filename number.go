@@ -19,15 +19,15 @@ func NewNumberValidator(tag string) Validator {
 }
 
 func (v NumberValidator) Validate(val interface{}) (bool, error) {
-	num := val.(int)
-
+	num,ok := val.(int)
+	if !ok{
+		return false, fmt.Errorf("不是数字")
+	}
 	if num < v.Min {
 		return false, fmt.Errorf("应大于 %v", v.Min)
 	}
-
 	if v.Max >= v.Min && num > v.Max {
 		return false, fmt.Errorf("应小于 %v", v.Max)
 	}
-
 	return true, nil
 }

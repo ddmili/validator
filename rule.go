@@ -35,9 +35,6 @@ func NewRuleValidator(tag string) (validator Validator) {
 	if r, ok := ruleArr[tag]; ok {
 		validator = RuleValidator{r, ""}
 	}
-
-	//将structTag中的min和max解析到结构体中
-	fmt.Sscanf(tag, "min=%d,max=%d", &validator.Min, &validator.Max)
 	return validator
 }
 
