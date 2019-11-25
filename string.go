@@ -31,7 +31,7 @@ func (v StringValidator) Validate(val interface{}) (bool, error) {
 		return false, fmt.Errorf("不能为空")
 	}
 
-	if l < v.Min {
+	if l <= v.Min {
 		return false, fmt.Errorf("字符串太短")
 	}
 
