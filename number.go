@@ -26,7 +26,7 @@ func (v NumberValidator) Validate(val interface{}) (bool, error) {
 	if num <= v.Min {
 		return false, fmt.Errorf("应大于 %v", v.Min)
 	}
-	if v.Max >= v.Min && num > v.Max {
+	if v.Max >= v.Min && num >= v.Max {
 		return false, fmt.Errorf("应小于 %v", v.Max)
 	}
 	return true, nil

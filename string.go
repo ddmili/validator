@@ -35,7 +35,7 @@ func (v StringValidator) Validate(val interface{}) (bool, error) {
 		return false, fmt.Errorf("字符串太短")
 	}
 
-	if v.Max >= v.Min && l > v.Max {
+	if v.Max >= v.Min && l >= v.Max {
 		return false, fmt.Errorf("字符串太长")
 	}
 
