@@ -17,15 +17,13 @@ type CustomValidator struct{
 
 // NewCustomValidator 生成自定义校验器
 // eg：validate:"require"
-func NewCustomValidator(val ValidateFun) Validator {
-	v := CustomValidator{}
-	v.Validate = val
-	return v
+func NewCustomValidator(fun ValidateFun) Validator {
+	return CustomValidator{run:fun}
 }
 
 // Validate 校验
 func (v CustomValidator) Validate(val interface{}) (bool, error) {
-	return true, nil
+	return v.run(val)
 }
 
 // RegisterVerification 注册验证函数

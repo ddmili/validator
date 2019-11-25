@@ -24,15 +24,11 @@ func getValidatorFromTag(tag string) Validator {
 	if ok{
 		return NewCustomValidator(fun)
 	}
-
-
 	switch args[0] {
 	case "number": //数字
 		return NewNumberValidator(strings.Join(args[1:], ","))
 	case "string": //字符串
 		return NewStringValidator(strings.Join(args[1:], ","))
-	case "require":
-		return RequireValidator{}
 	default:
 		return NewRuleValidator(args[0])
 	}
